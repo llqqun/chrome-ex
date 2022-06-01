@@ -1,11 +1,17 @@
+.ware {
+  text-align: center;
+}
 button {
   width: max-content;
   color: #fff;
   outline: none;
   padding: 6px 10px;
-  margin: 10px;
   border: none;
   border-radius: 6px;
+  background-color: #4688f1;
+}
+button:not(:nth-last-child(1)) {
+  margin-bottom: 10px;
 }
 
 button.current {

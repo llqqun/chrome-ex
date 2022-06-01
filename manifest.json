@@ -11,7 +11,8 @@
     "content_scripts": [
         {
             "matches": [
-                "https://www.javbus.com/*"
+                "https://www.javsee.bid/uncensored*",
+                "https://www.javbus.com/uncensored*"
             ],
             "css": [
                 "/style/jav.css"
