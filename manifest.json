@@ -1,0 +1,33 @@
+{
+    "name": "tool-example",
+    "description": "custom工具",
+    "version": "1.0",
+    "manifest_version": 3,
+    // 会一直常驻的后台JS或后台页面
+    "background": {
+        "service_worker": "background.js"
+    },
+    // 需要直接注入页面的JS,css
+    "content_scripts": [
+        {"matches": ["https://www.javbus.com/*"],
+        "css": ["/style/jav.css"],
+        "run_at": "document_end"}
+    ],
+    "options_page": "options.html",
+    "permissions": ["storage", "activeTab", "scripting", "debugger"],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "/images/get_started16.png",
+            "32": "/images/get_started32.png",
+            "48": "/images/get_started48.png",
+            "128": "/images/get_started128.png"
+        }
+    },
+    "icons": {
+        "16": "/images/get_started16.png",
+        "32": "/images/get_started32.png",
+        "48": "/images/get_started48.png",
+        "128": "/images/get_started128.png"
+    }
+}
