@@ -9,12 +9,29 @@
     },
     // 需要直接注入页面的JS,css
     "content_scripts": [
-        {"matches": ["https://www.javbus.com/*"],
-        "css": ["/style/jav.css"],
-        "run_at": "document_end"}
+        {
+            "matches": [
+                "https://www.javbus.com/*"
+            ],
+            "css": [
+                "/style/jav.css"
+            ],
+            // 代码注入的时间，可选值： "document_start", "document_end", or "document_idle"，最后一个表示页面空闲时，默认document_idle
+            "run_at": "document_start"
+        }
     ],
     "options_page": "options.html",
-    "permissions": ["storage", "activeTab", "scripting", "debugger"],
+    // 权限申请
+    "permissions": [
+        "contextMenus", // 右键菜单
+        "storage", // 插件本地存储
+        "tabs", // 标签
+        "activeTab",
+        "scripting",
+        "debugger"
+    ],
+    // 插件主页，这个很重要，不要浪费了这个免费广告位
+    "homepage_url": "https://www.baidu.com",
     "action": {
         "default_popup": "popup.html",
         "default_icon": {
