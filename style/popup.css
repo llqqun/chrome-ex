@@ -1,0 +1,20 @@
+body {
+    width: 210px;
+}
+.title-bar {
+    padding: 20px;
+    font-size: 20px;
+    text-align: center;
+    border: 1px solid #eeeeee;
+}
+.ware {
+    flex-flow: column wrap;
+    justify-content: center;
+    padding: 10px 20px;
+}
+.ware button {
+    width: 100%;
+}
+.ware button + button {
+    margin-top: 10px;
+}

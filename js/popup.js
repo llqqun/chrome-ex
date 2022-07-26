@@ -1,55 +1,4 @@
-let javImage = document.getElementById("javImage");
-let imagesPreview = document.getElementById("imagesPreview");
-let imgDownload = document.getElementById("imgDownload");
-let ipSelect = document.getElementById("ip_select")
-chrome.storage.sync.get("ip", ({ip}) => {
-    if (ip) {
-        ipSelect.innerText = ip
-    }
-});
 
-/*imgDownload.addEventListener("click", function (tab) {
- //   chrome.tabs.executeScript(null, { file: "./page/imgDownload.js" });
- let ele = document.getElementById("postmessage_2079592");
- let imgarr = Array.from(ele.querySelectorAll("img"));
- imgarr.forEach(async (item, index) => {
-   if (index !== 0) {
-     let response = await fetch(item.src); // 内容转变成blob地址
-     let blob = await response.blob(); // 创建隐藏的可下载链接
-     let objectUrl = window.URL.createObjectURL(blob);
-     let a = document.createElement("a");
-     let type = item.src.substring(item.src.lastIndexOf('.'))
-     a.href = objectUrl;
-     a.innerText = index;
-     a.download = item.id + type;
-     a.target = "_blank";
-     a.click();
-     document.body.appendChild(a);
-   }
- });
-});*/
-$('#imgDownload').click(e => {
-    // window.open(chrome.runtime.getURL('/page/imgDownload.html'));
-    let selectW = '#waterfall img'
-    selectW = prompt('设定图片获取范围', selectW)
-    sendMessageToContentScript({ code: 1, val: selectW, msg: '图片下载'}, (response) => {
-        if(response && response.code === 0) {
-            window.open(chrome.runtime.getURL('/page/imgDownload.html'));
-        }
-    })
-    // getCurrentTabId((tabId) => {
-    //     if (!tabId) return false
-    //     // 注入代码
-    //     chrome.scripting.executeScript({
-    //             target: {tabId: tabId},
-    //             files: ['js/imgDownload.js']
-    //         },
-    //         () => {
-    //             console.log('注入成功')
-    //         }
-    //     )
-    // })
-})
 // 监听来自content-script的消息
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     console.log('收到来自content-script的消息：');
@@ -68,6 +17,7 @@ function getCurrentTabId(callback) {
 function sendMessageToContentScript(message, callback) {
     getCurrentTabId((tabId) => {
         chrome.tabs.sendMessage(tabId, message, function (response) {
+            console.log(response)
             if (callback) callback(response);
         });
     });
@@ -155,24 +105,43 @@ function sendMessageToContentScript(message, callback) {
   styleElement.appendChild(document.createTextNode(newStyle));
 } */
 
-/**
- * 本地公网ip查询
- */
-ipSelect.addEventListener("click", () => {
-    ipSelect.innerText = '刷新中....'
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", 'https://2022.ip138.com/', true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            let reg = /(\d+\.){3}\d/g
-            let result = ''
-            xhr.responseText.replace(reg, (match) => {
-                result = match
-                return match
-            })
-            chrome.storage.sync.set({ip: result});
-            ipSelect.innerText = result
+$(() => {
+    chrome.storage.sync.get("ip", ({ip}) => {
+        if (ip) {
+            $("#ip_select").text('公网IP:' + ip)
         }
-    }
-    xhr.send();
+    });
+    // UI 初始化
+    $(".btn").button();
+    // 公网IP
+    $("#ip_select").click(function () {
+        this.innerText = '刷新中....'
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", 'https://2022.ip138.com/', true);
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                let reg = /(\d+\.){3}\d/g
+                let result = ''
+                xhr.responseText.replace(reg, (match) => {
+                    result = match
+                    return match
+                })
+                chrome.storage.sync.set({ip: result});
+                this.innerText = '公网IP:' + result
+            }
+        }
+        xhr.send();
+    })
+    // 图片批量下载
+    $('#imgDownload').click(e => {
+        let selectW = '#waterfall img'
+        selectW = prompt('设定图片获取范围', selectW)
+        if (selectW) {
+            sendMessageToContentScript({ code: 'CURRENT-PAGE-IMG', val: selectW, msg: '图片下载'}, (res) => {
+                console.log(res)
+                window.open(chrome.runtime.getURL('/page/imgDownload.html'));
+            })
+            // chrome.runtime.sendMessage({ code: 'CURRENT-PAGE-IMG', val: selectW, msg: '图片下载'});
+        }
+    })
 })
