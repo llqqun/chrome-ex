@@ -3,18 +3,19 @@
     align-content: center;
     align-items: center;
     flex-flow: row wrap;
-    position: relative;
     overflow: hidden;
+    user-select: none;
 }
 #check-box {
-    position: absolute;
+    position: fixed;
     display: none;
     top: 0;
     left: 0;
     border: 1px dashed #30f597;
     background: #17f88c52;
-    width: 100px;
-    height: 100px;
+    width: 0;
+    height: 0;
+    pointer-events: none;
 }
 
 .img-item {
@@ -22,6 +23,7 @@
     height: 120px;
     margin: 5px;
     border: 2px solid #51aad8ee;
+    /*position: relative;*/
 }
 
 .img-item.cancel {
