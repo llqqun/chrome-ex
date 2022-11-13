@@ -22,6 +22,12 @@
       "run_at": "document_start"
     },
     {
+      "matches":["*://blog.csdn.net/*"],
+      "css": [
+        "/style/removeSelect.css"
+      ]
+    },
+    {
       "matches": [
         "*://www.javbus.com/uncensored*"
       ],
