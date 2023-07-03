@@ -9,23 +9,15 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "components/jquery-3.3.1.min.js",
-        "js/content-script.js"
-      ],
-      "css": [
-        "style/norm.css"
-      ],
-      "run_at": "document_start"
-    },
-    {
       "matches":["*://blog.csdn.net/*"],
+      "js": ["/js/csdnJs.js"],
       "css": [
         "/style/removeSelect.css"
       ]
+    },
+    {
+      "matches":["*://t66y.com/*"],
+      "js": ["/js/caoliu.js"]
     },
     {
       "matches": [
