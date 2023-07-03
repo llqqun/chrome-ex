@@ -17,7 +17,8 @@
     },
     {
       "matches":["*://t66y.com/*"],
-      "js": ["/js/caoliu.js"]
+      "js": ["/js/caoliu.js"],
+      "css": ["/style/caoliu.css"]
     },
     {
       "matches": [

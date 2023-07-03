@@ -1,0 +1,8 @@
+.cl-content {
+    font-size: 16px;
+    font-family: Arial;
+    margin: 0 0 2%;
+    line-height: 2.2;
+}
+.cl-content iframe{background:#EFEFEF}
+.cl-content img, .cl-content input{max-width:100%;min-width:16px;min-height:16px;background:#EFEFEF;}
